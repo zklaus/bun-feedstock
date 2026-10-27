@@ -8,9 +8,11 @@ set "PATH=%SRC_DIR%\bun.native;%PATH%"
 :: The MSVC headers and libraries come from the vs2022 activation (INCLUDE/LIB).
 set "BUN_TOOLCHAIN_LLVM=%BUILD_PREFIX%\Library"
 
-:: Use conda-forge's nightly Rust instead of a rustup toolchain.
+:: Use conda-forge's Rust instead of a rustup toolchain, with RUSTC_BOOTSTRAP=1
+:: for bun's nightly-only features and -Z flags (see build.sh).
 for /f "delims=" %%i in ('rustc --print sysroot') do set "BUN_TOOLCHAIN_RUST=%%i"
 if errorlevel 1 exit 1
+set RUSTC_BOOTSTRAP=1
 
 :: Use the unpatched upstream dependencies from %LIBRARY_PREFIX% instead of
 :: building the vendored copies (patch 0006), as in build.sh (which also

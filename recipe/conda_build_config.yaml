@@ -18,6 +18,10 @@ c_stdlib_version:      # [osx]
 # https://www.man7.org/linux/man-pages/man2/preadv2.2.html#HISTORY
 c_stdlib_version:      # [linux]
 - 2.28                 # [linux]
-# bun needs a nightly rust (see rust-toolchain.toml)
-channel_sources:
-  - conda-forge/label/rust_dev,conda-forge
+# bun pins nightly-2026-09-15 (rust-toolchain.toml) and uses unstable
+# features and -Z flags, which conda-forge's stable rust accepts with
+# RUSTC_BOOTSTRAP=1 (see build.sh). Nightlies from 2026-09-24 on and
+# stable >= 1.100 drop the allocator_api feature bun's crates enable
+# (rust-lang/rust#156882), so stay on 1.99 until bun moves its pin.
+rust_compiler_version:
+- 1.99

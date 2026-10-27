@@ -44,8 +44,11 @@ if [[ "${target_platform}" == linux-* ]]; then
 fi
 export PATH="${toolchain}/bin:${PATH}"
 
-# Use conda-forge's nightly Rust instead of a rustup toolchain.
+# Use conda-forge's Rust instead of a rustup toolchain. bun relies on
+# nightly-only features and -Z flags; RUSTC_BOOTSTRAP=1 makes the stable
+# rustc and cargo accept them (see conda_build_config.yaml for the version).
 export BUN_TOOLCHAIN_RUST="${BUILD_PREFIX}"
+export RUSTC_BOOTSTRAP=1
 
 # Use the unpatched upstream dependencies from $PREFIX instead of building
 # the vendored copies (patch 0006). sqlite is only built on Linux; macOS

@@ -56,7 +56,8 @@ requirements:
   build:
     - ${{ compiler('c') }}
     - ${{ compiler('cxx') }}
-    # nightly rust from conda-forge/label/rust_dev (see conda_build_config.yaml)
+    # stable rust, used with RUSTC_BOOTSTRAP=1 (see conda_build_config.yaml
+    # and build.sh)
     - ${{ compiler('rust') }}
     # bun's link takes every Rust crate's rlib, std's included, so std is
     # always built from source with -Zbuild-std, which needs its sources at
